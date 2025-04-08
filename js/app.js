@@ -4,7 +4,15 @@ const lastName = document.querySelector("#last");
 const countryName = document.querySelector("#country");
 const phoneNumber = document.querySelector("#phone");
 const email = document.querySelector("#email");
-// const btnGenerate = document.querySelector("#btn");Eliminamos para haer el BONUS
+const btnGenerate = document.querySelector("#btn");
+btnGenerate.style.display = "none"; //Eliminamos para hacer el BONUS 1
+const btnInterview = document.querySelector("#btnInterview");
+btnInterview.style.display = "block";//BONUS 2
+
+const callInterview = document.querySelector("#call-interview");
+callInterview.style.display = "block";//BONUS 2
+
+let data; //La ponemos como global porque el estado actual de la app varía con la persona actual.
 
 const newPerson = setInterval(() => {
     generateNewPerson();
@@ -12,7 +20,7 @@ const newPerson = setInterval(() => {
 
  async function generateNewPerson(){
     const response = await fetch("https://randomuser.me/api/");
-    const data = await response.json();
+    data = await response.json();
     console.log(data.results[0].name.first);
     console.log(data.results[0].name.last);
     console.log(data.results[0].location.country);
@@ -26,4 +34,13 @@ const newPerson = setInterval(() => {
     phoneNumber.textContent = data.results[0].phone;
     email.textContent = data.results[0].email;
     imagePhoto.src = data.results[0].picture.medium;
+
+
+
 };
+
+btnInterview.addEventListener("click", ()=>{
+    const newTr = document.createElement("tr");
+    newTr.innerHTML = `<td>${data.results[0].name.first} ${ data.results[0].name.last}</td><td>${data.results[0].phone}</td>`;
+    callInterview.appendChild(newTr);
+});
